@@ -1,0 +1,2 @@
+source /home/mei/esp32/workspace/ai_esp32s3/build/gdbinit/symbols
+source /home/mei/esp32/workspace/ai_esp32s3/build/gdbinit/connect

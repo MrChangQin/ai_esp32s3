@@ -1,0 +1,11 @@
+menu "Board Configuration"
+
+    choice BOARD_TYPE
+        prompt "Board Type"
+        default BOARD_TYPE_LC_SZP_DEV
+        config BOARD_TYPE_LC_SZP_DEV
+            bool "立创实战派s3开发板"
+        config BOARD_TYPE_LC_SZP_C3_DEV
+            bool "立创实战派c3开发板"
+    endchoice
+endmenu

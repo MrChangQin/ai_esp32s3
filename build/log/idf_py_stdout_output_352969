@@ -1,0 +1,21 @@
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /home/mei/esp32/workspace/ai_esp32s3/build/bootloader/esp-idf/esptool_py && /home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/python /home/mei/esp32/esp-idf/esp-idf-541/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/mei/esp32/workspace/ai_esp32s3/build/bootloader/bootloader.bin
+Bootloader binary size 0x5220 bytes. 0x2de0 bytes (36%) free.
+[2/7] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/app.cpp.obj
+In file included from /home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/audio_es7210.h:5,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/app.h:13,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/app.cpp:1:
+/home/mei/esp32/esp-idf/esp-idf-541/components/driver/deprecated/driver/i2s.h:27:2: warning: #warning "This set of I2S APIs has been deprecated, please include 'driver/i2s_std.h', 'driver/i2s_pdm.h' or 'driver/i2s_tdm.h' instead. if you want to keep using the old APIs and ignore this warning, you can enable 'Suppress legacy driver deprecated warning' option under 'I2S Configuration' menu in Kconfig" [-Wcpp]
+   27 | #warning "This set of I2S APIs has been deprecated, \
+      |  ^~~~~~~
+[3/7] Linking C static library esp-idf/main/libmain.a
+[4/7] Generating ld/sections.ld
+[5/7] Linking CXX executable ai_esp32s3.elf
+[6/7] Generating binary image from built executable
+esptool.py v4.9.0
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated /home/mei/esp32/workspace/ai_esp32s3/build/ai_esp32s3.bin
+[7/7] cd /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/esptool_py && /home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/python /home/mei/esp32/esp-idf/esp-idf-541/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/mei/esp32/workspace/ai_esp32s3/build/partition_table/partition-table.bin /home/mei/esp32/workspace/ai_esp32s3/build/ai_esp32s3.bin
+ai_esp32s3.bin binary size 0x85230 bytes. Smallest app partition is 0x100000 bytes. 0x7add0 bytes (48%) free.
