@@ -5,7 +5,6 @@
 
 #include "sd_card.h"
 #include "wav_recorder.h"
-#include "audio_es7210.h"
 #include "app.h"
 
 

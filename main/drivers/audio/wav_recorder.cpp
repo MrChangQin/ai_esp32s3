@@ -1,14 +1,20 @@
 #include "wav_recorder.h"
 #include "format_wav.h"
-#include "audio_es7210.h"
 #include <esp_timer.h>
 #include <esp_check.h>
+#include "board.h"
+
 
 
 #define TAG "WavRecorder"
+#define EXAMPLE_I2S_SAMPLE_RATE 16000
+#define EXAMPLE_I2S_CHAN_NUM 2
+#define EXAMPLE_I2S_SAMPLE_BITS 16
 
-WavRecorder::WavRecorder(std::shared_ptr<FileInterface> fileInterface, std::shared_ptr<AudioInputInterface> audioInputInterface)
-: m_file(fileInterface), audio_input(audioInputInterface) {
+
+WavRecorder::WavRecorder()
+{
+
 }
 
 esp_err_t WavRecorder::record(uint16_t seconds) {
@@ -24,6 +30,13 @@ esp_err_t WavRecorder::record(uint16_t seconds) {
                                                     EXAMPLE_I2S_SAMPLE_RATE,
                                                     EXAMPLE_I2S_CHAN_NUM);
 
+    auto m_file = Board::GetInstance().GetFileInterface();
+    auto audio_ = Board::GetInstance().GetAudioHAL();  
+
+    audio_->enable_input();
+
+    m_file->open("test.wav", "w+");
+
     // 1. 写入WAV头部
     if (m_file->write_file((char *)&wav_header, sizeof(wav_header)) != ESP_OK) {
         ESP_LOGE(TAG, "写入WAV头部失败");
@@ -35,21 +48,20 @@ esp_err_t WavRecorder::record(uint16_t seconds) {
     size_t wav_written = 0;
     static int16_t i2s_readraw_buff[8192];
 
-    // 使能通道，如果出错直接跳到err标签位置
-    ESP_GOTO_ON_ERROR(audio_input->enable(), err, TAG, "error while starting i2s rx channel");
+    // 使能通道
+    audio_->enable_input();
 
     while (wav_written < wav_size) {
         if(wav_written % byte_rate < sizeof(i2s_readraw_buff)) {
-            ESP_LOGI(TAG, "Recording: %"PRIu32"/%ds", wav_written/byte_rate + 1, EXAMPLE_RECORD_TIME_SEC);
+            ESP_LOGI(TAG, "Recording: %"PRIu32"/%ds", wav_written/byte_rate + 1, seconds);
             printf(".");
         }
         size_t bytes_read = 0;
-        /* Read RAW samples from ES7210 */
-        ESP_GOTO_ON_ERROR(audio_input->read(i2s_readraw_buff, sizeof(i2s_readraw_buff), &bytes_read), err, TAG, "error while reading samples from i2s");
-        /* Write the samples to the WAV file */
-        // ESP_GOTO_ON_FALSE(m_file->write_file(filename,(char *)i2s_readraw_buff,true), ESP_FAIL, err,
-        // TAG. "error while writing samples to wav file");
-        
+
+        audio_->read(i2s_readraw_buff, sizeof(i2s_readraw_buff)/sizeof(int16_t));
+
+        bytes_read = sizeof(i2s_readraw_buff);
+
         if (m_file->write_file((char *)i2s_readraw_buff, bytes_read) != ESP_OK) {
             ESP_LOGE(TAG, "写入WAV数据失败");
             goto err;
@@ -57,10 +69,11 @@ esp_err_t WavRecorder::record(uint16_t seconds) {
         
         wav_written += bytes_read;
     }
+    m_file->close();
     printf("WAV文件写入完成\n");
 
 err:
-    audio_input->disable();
+    audio_->disable_input();
     return ret;
     
 }

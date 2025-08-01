@@ -85,7 +85,5 @@
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/wifi_provisioning/libwifi_provisioning.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-opus/lib78__esp-opus.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-opus-encoder/lib78__esp-opus-encoder.a
-/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__es7210/libespressif__es7210.a
-/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__es8311/libespressif__es8311.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__esp_codec_dev/libespressif__esp_codec_dev.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/main/libmain.a

@@ -5,8 +5,8 @@
 
 /* I2C port and GPIOs */
 #define AUDIO_I2C_NUM               (I2C_NUM_0)
-#define AUDIO_I2C_SDA_IO            GPIO_NUM_2
-#define AUDIO_I2C_SCL_IO            GPIO_NUM_1
+#define AUDIO_I2C_SDA_IO            GPIO_NUM_1
+#define AUDIO_I2C_SCL_IO            GPIO_NUM_2
 
 /* I2S port and GPIOs */
 #define AUDIO_I2S_MCK_IO            GPIO_NUM_38
@@ -22,19 +22,35 @@
 #define AUDIO_OUT_SAMPLE_RATE       (16000)
 #define AUDIO_IN_SAMPLE_RATE        (16000)
 
-#define ES8311_I2C_ADDR             (0x18)
-#define ES7210_I2C_ADDR             (0x41)
+/* ES8311 ES7210  I2C address 8bit */ 
+// #define ES8311_I2C_ADDR             (0x18)
+// #define ES7210_I2C_ADDR             (0x41)
+// #define PCA9557_I2C_ADDR            (0x19)
+
+/* ES8311 ES7210  I2C address 7bit */ 
+#define ES8311_I2C_ADDR             (0x18<<1)
+#define ES7210_I2C_ADDR             (0x41<<1)
+#define PCA9557_I2C_ADDR            (0x19<<1)
+
+
+/* SD card GPIOs */
+#define SD_CARD_PIN_CLK GPIO_NUM_47
+#define SD_CARD_PIN_CMD GPIO_NUM_48
+#define SD_CARD_PIN_D0  GPIO_NUM_21
 
 
 class LcSzpDevBoard : public Board
 {
 private:
     i2c_master_bus_handle_t i2c0_bus;
-    AudioHAL* audio_hal;
+
 
 public:
     LcSzpDevBoard();
     ~LcSzpDevBoard();
 
     AudioHAL* GetAudioHAL() override;
+    FileInterface* GetFileInterface() override;
+
+
 };

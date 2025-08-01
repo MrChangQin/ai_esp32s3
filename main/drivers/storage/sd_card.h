@@ -6,17 +6,16 @@
 #include "driver/sdmmc_host.h"
 #include "sdmmc_cmd.h"
 #include "esp_vfs_fat.h"
+#include "soc/gpio_num.h"
 
 #include "file_interface.h"
+
 
 
 #define TAG "SD_CARD"
 
 #define SD_CARD_MOUNT_POINT "/sdcard"
 #define SD_CARD_MAX_FILES 5
-#define SD_CARD_PIN_CLK GPIO_NUM_14
-#define SD_CARD_PIN_CMD GPIO_NUM_15
-#define SD_CARD_PIN_D0  GPIO_NUM_2
 
 
 class SdCard : public FileInterface {
@@ -24,7 +23,7 @@ private:
     FILE *m_file = nullptr; // Pointer to the file being accessed
 
 public:
-    SdCard();
+    SdCard(gpio_num_t cmd_pin, gpio_num_t clk_pin, gpio_num_t d0_pin);
     ~SdCard();
 
     esp_err_t open(const char *filename, const char *mode) override;

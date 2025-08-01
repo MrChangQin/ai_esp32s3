@@ -85,7 +85,5 @@ $<TARGET_FILE:__idf_usb>
 $<TARGET_FILE:__idf_wifi_provisioning>
 $<TARGET_FILE:__idf_78__esp-opus>
 $<TARGET_FILE:__idf_78__esp-opus-encoder>
-$<TARGET_FILE:__idf_espressif__es7210>
-$<TARGET_FILE:__idf_espressif__es8311>
 $<TARGET_FILE:__idf_espressif__esp_codec_dev>
 $<TARGET_FILE:__idf_main>
