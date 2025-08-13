@@ -1,5 +1,5 @@
 #pragma once
-#include "board.h"
+#include "wifi_board.h"
 #include "audio_hal.h"
 
 
@@ -39,7 +39,7 @@
 #define SD_CARD_PIN_D0  GPIO_NUM_21
 
 
-class LcSzpDevBoard : public Board
+class LcSzpDevBoard : public WifiBoard
 {
 private:
     i2c_master_bus_handle_t i2c0_bus;
@@ -51,6 +51,5 @@ public:
 
     AudioHAL* GetAudioHAL() override;
     FileInterface* GetFileInterface() override;
-
 
 };

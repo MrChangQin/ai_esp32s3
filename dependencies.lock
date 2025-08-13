@@ -1,4 +1,14 @@
 dependencies:
+  78/esp-ml307:
+    component_hash: 56d2754f855b03d3ab491fb7f246dd749b741feec62586222bd5614c52999148
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.3'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 2.2.1
   78/esp-opus:
     component_hash: 8182b733f071d7bfe1e837f4c9f8649a63e4c937177f089e65772880c02f2e17
     dependencies:
@@ -38,9 +48,10 @@ dependencies:
       type: idf
     version: 5.4.1
 direct_dependencies:
+- 78/esp-ml307
 - 78/esp-opus-encoder
 - espressif/esp_codec_dev
 - idf
-manifest_hash: f6a9e76eb2d49cd25b791532469bf1e47d1c412e8f3dafa4adf83a9ffe83a18a
+manifest_hash: cef1f2ca8145ae1a0aaec910ca2f1d470489ba530c5f718561869ec16cd7066b
 target: esp32s3
 version: 2.0.0

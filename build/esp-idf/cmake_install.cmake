@@ -554,6 +554,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-ml307/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-opus/cmake_install.cmake")
 endif()
 

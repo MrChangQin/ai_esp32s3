@@ -20,9 +20,9 @@ public:
     virtual void enable_output() = 0;
     virtual void disable_input() = 0;
     virtual void disable_output() = 0;
+    void output_data(std::vector<int16_t>& pcm);
+    bool input_data(std::vector<int16_t>& pcm);
 
-    virtual void write(const int16_t* data, int samples) = 0;
-    virtual int read(int16_t* data, int samples) = 0;
     virtual void set_output_volume(int volume) = 0;
 
 protected:
@@ -43,5 +43,8 @@ protected:
     bool enabled_input = false;
     bool enabled_output = false;
     bool input_ref = false;
+
+    virtual void write(const int16_t* data, int samples) = 0;
+    virtual int read(int16_t* data, int samples) = 0;
 
 };

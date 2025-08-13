@@ -52,6 +52,7 @@
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/wpa_supplicant/libwpa_supplicant.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/esp_coex/libesp_coex.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/esp_wifi/libesp_wifi.a
+/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/bt/libbt.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/unity/libunity.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/cmock/libcmock.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/console/libconsole.a
@@ -83,6 +84,7 @@
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/touch_element/libtouch_element.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/usb/libusb.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/wifi_provisioning/libwifi_provisioning.a
+/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-ml307/lib78__esp-ml307.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-opus/lib78__esp-opus.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/78__esp-opus-encoder/lib78__esp-opus-encoder.a
 /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__esp_codec_dev/libespressif__esp_codec_dev.a

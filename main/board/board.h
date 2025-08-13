@@ -4,6 +4,7 @@
 #include <driver/i2c_master.h>
 #include <esp_err.h>
 #include <soc/gpio_num.h>
+#include <web_socket.h>
 
 #include "file_interface.h"
 
@@ -36,6 +37,10 @@ public:
 
     virtual AudioHAL* GetAudioHAL() = 0;
     virtual FileInterface* GetFileInterface() = 0;
+    virtual WebSocket* GetWebSocket() = 0;
+    
+    virtual void start_net() = 0;
+    virtual void stop_net() = 0;
 
 };
 

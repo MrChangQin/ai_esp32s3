@@ -6,7 +6,12 @@ SET(SRCS "main.cpp"
    "drivers/audio/wav_recorder.cpp"
    "drivers/audio/audio_es8311_es7210.cpp"
    "drivers/audio/audio_hal.cpp"
+   "drivers/ble/ble_lib.c"
+   "drivers/setting/setting.cpp"
    "board/board.cpp"
+   "board/common/wifi_board.cpp"
+   "protocols/protocol_adapter.cpp"
+   "protocols/websocket_protocol.cpp"
 )
 
 # 新增开发板需要在这里写一个配置BOARD_TYPE的宏为板子类型文件夹名称
@@ -29,7 +34,11 @@ SET(INCLUDE_DIRS
     "drivers"
     "drivers/storage"
     "drivers/audio"
+    "drivers/ble"
+    "drivers/setting"
     "board"
+    "board/common"
+    "protocols"
 )
 
 idf_component_register(
