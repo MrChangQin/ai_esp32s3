@@ -1,85 +1,104 @@
 #include "app.h"
 
 
-App::App()
-{ 
+App::App() { 
     work_task = new WorkTask(4096 * 2);
-
     opus_encoder_ = std::make_unique<OpusEncoderWrapper>(16000, 1, 60);
-    audio_input_ = std::make_unique<AudioEs7210>(16000, 1);
-    file_ = std::make_unique<SdCard>();
     opus_decoder_ = std::make_unique<OpusDecoderWrapper>(16000, 1, 60);
-    audio_output_ = std::unique_ptr<AudioES8311>();
+
 }
 
-App::~App()
-{
-}
-
-void App::run()
-{ 
-
-    ESP_ERROR_CHECK(file_->open("test.opus", "wb"));
-    std::printf("开始说话\n");
-    // 
-    audio_input_->enable();
-    vTaskDelay(pdMS_TO_TICKS(1000));
-
-    for (size_t i = 0; i < 50; i++) {
-
-        std::vector<int16_t> pcm(960);
-
-        audio_input_->read(pcm.data(), pcm.size()*sizeof(int16_t), nullptr);
-
-        work_task->add_task([this, pcm = std::move(pcm)]() mutable {
-            opus_encoder_->Encode(std::move(pcm), [this](std::vector<uint8_t>&& opus){
-                opus_packets_.emplace_back(std::move(opus));
-                // // 音频编码完成
-                // uint32_t frame_size = static_cast<uint32_t>(opus.size());
-                // //2、转为大端序
-                // uint32_t frame_size_big_endian = htonl(frame_size); //转为大端序 0x12345678·->·0x78563412
-                // //3.先写入帧长度（4字节）
-                // file_->write_file(reinterpret_cast<const char*>(&frame_size_big_endian), sizeof(frame_size_big_endian));
-                // //4.再写入编码后的数据
-                // file_->write_file(reinterpret_cast<const char*>(opus.data()), opus.size());
-            });
-        });
-    }
-
-    // 延时（必要，等待后台任务执行完成）
-    vTaskDelay(pdMS_TO_TICKS(1000));
-    audio_input_->disable();
-    // file_->close();
-    std::printf("结束说话\n");
-
-    audio_output_->disable();
-    audio_output_->enable();
-    vTaskDelay(pdMS_TO_TICKS(1000));
-
-
-    // 释放内存, 进行解码
-    for (auto& opus : opus_packets_) {
-        work_task->add_task([this, opus = std::move(opus)]() mutable {
-            std::vector<int16_t> decoded_pcm;
-            opus_decoder_->Decode(std::move(opus), decoded_pcm);
-
-            std::lock_guard<std::mutex> lock(pcm_mutex_);
-            const uint8_t* data_ptr = (const uint8_t*) decoded_pcm.data();
-            audio_output_->output((char *)data_ptr, decoded_pcm.size() * sizeof(int16_t));
-        });
-    }
-
-
-    while (true)
-    {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        print_all_tasks();
-    }
-
+App::~App() {
+    
 }
 
 void App::print_all_tasks() {
     char task_list_buffer[1024] = {0};
-    // vTaskList(task_list_buffer);
+    vTaskList(task_list_buffer);
     printf("Task List: \n%s\n", task_list_buffer);
+}
+
+void App::audio_output_process(AudioHAL* audio_) {
+    std::unique_lock<std::mutex> lock(pcm_mutex_);
+    if (opus_packets_.empty()) {
+        return;
+    }
+    auto opus = std::move(opus_packets_.front());
+    opus_packets_.pop_front();
+    lock.unlock();
+    audio_->enable_output();
+
+    work_task->add_task([this, audio_, opus = std::move(opus)]() mutable {
+        std::vector<int16_t> pcm;
+        if (!opus_decoder_->Decode(std::move(opus), pcm)) {
+            return;
+        }
+        audio_->output_data(pcm);
+    });
+}
+
+void App::audio_task_loop() {
+    auto audio_ = Board::GetInstance().GetAudioHAL();
+    while (true) {
+        vTaskDelay(pdMS_TO_TICKS(30));
+        App::audio_output_process(audio_);
+    }
+}
+
+void App::run() { 
+    xTaskCreatePinnedToCore([](void* arg) {
+        App* app = (App*)arg;
+        app->audio_task_loop();
+        vTaskDelete(NULL);
+    }, "audio", 4096 * 2, this, 8, &audio_task_handle_, 0);
+
+    auto& board = Board::GetInstance();
+
+    board.start_net();
+    protocol_ = std::make_unique<WebsocketProtocol>();
+    protocol_->open_server_channel();
+
+    int is_enter_wifi_config;
+    Settings setting = Settings(SettingNameSpace::WIFI, true);
+    setting.set_int(SettingKey::IS_ENTER_WIFI_CONFIG, 2);
+    is_enter_wifi_config = setting.get_int(SettingKey::IS_ENTER_WIFI_CONFIG, -1);
+
+    std::cout << "is_enter_wifi_config: " << is_enter_wifi_config << "\n";
+
+    // WavRecorder recorder;
+    // recorder.record(10);
+
+    auto audio_ = Board::GetInstance().GetAudioHAL();
+
+    audio_->enable_input();
+    std::printf("开始说话\n");
+
+    vTaskDelay(pdMS_TO_TICKS(1000));
+
+    {   
+        std::unique_lock<std::mutex> lock(pcm_mutex_);
+
+        for (size_t i = 0; i < 50; i++) 
+        {
+            std::vector<int16_t> pcm(960 * 2); // 两路mic data
+            audio_->input_data(pcm); // 
+
+            auto mic_pcm = std::vector<int16_t>(pcm.size() / 2);
+
+            for (size_t i = 0, j = 0; i < mic_pcm.size(); ++i, j += 2) {  // 获取单声道数据
+                mic_pcm[i] = pcm[j];
+            }
+
+            work_task->add_task([this, mic_pcm = std::move(mic_pcm)]() mutable {
+                opus_encoder_->Encode(std::move(mic_pcm), [this](std::vector<uint8_t>&& opus){
+                    opus_packets_.emplace_back(std::move(opus));
+                });
+            });
+        }
+    }
+
+    while (true) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        print_all_tasks();
+    }
 }

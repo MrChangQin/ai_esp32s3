@@ -111,13 +111,14 @@
     "audio_hal.h": "c",
     "i2s_types.h": "c",
     "audio_codec_ctrl_if.h": "c",
-    "*.tcc": "cpp"
+    "*.tcc": "cpp",
+    "ble_lib.h": "c"
   },
   "idf.port": "/dev/ttyUSB0",
   "idf.espIdfPath": "/home/mei/esp32/esp-idf/esp-idf-541",
   "idf.toolsPath": "/home/mei/.espressif",
   "idf.openOcdConfigs": [
-    "board/esp32s3-builtin.cfg"
+    "board/esp32s3-bridge.cfg"
   ],
   "idf.customExtraVars": {
     "OPENOCD_SCRIPTS": "c:\\ESP32\\515_Tools\\tools\\openocd-esp32\\v0.12.0-esp32-20240821/openocd-esp32/share/openocd/scripts",

@@ -2,11 +2,13 @@
 #include <cstddef>
 #include "esp_err.h"
 
+
 enum class SeekMode {
     Set = SEEK_SET,  // Set the file position to the specified offset
     Cur = SEEK_CUR,  // Set the file position to the current position plus the offset
     End = SEEK_END  // Set the file position to the end of the file plus the offset
 };
+
 
 class FileInterface {
 public:

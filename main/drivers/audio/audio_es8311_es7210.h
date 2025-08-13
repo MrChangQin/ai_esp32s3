@@ -46,8 +46,10 @@ public:
     virtual void disable_input() override;
     virtual void disable_output() override;
 
-    virtual void write(const int16_t* data) override;
+    virtual void write(const int16_t* data, int samples) override;
     virtual int read(int16_t* data, int samples) override;
+
+    virtual void set_output_volume(int volume) override;
 
     AudioEs8311Es7210(void* i2c_bus_handle, i2c_port_t i2c_port, int input_sample_rate, int output_sample_rate,
                       gpio_num_t mclk_pin, gpio_num_t bclk_pin, gpio_num_t ws_pin, gpio_num_t dout_pin, gpio_num_t din_pin,

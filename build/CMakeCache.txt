@@ -18,6 +18,9 @@
 CCACHE_ENABLE:UNINITIALIZED=0
 
 //Path to a program.
+CCACHE_FOUND:FILEPATH=/usr/bin/ccache
+
+//Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/home/mei/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32s3-elf-addr2line
 
 //Path to a program.
@@ -349,6 +352,9 @@ PYTHON:UNINITIALIZED=/home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/pytho
 //No help, variable specified on the command line.
 PYTHON_DEPS_CHECKED:UNINITIALIZED=1
 
+//No help, variable specified on the command line.
+SDKCONFIG:UNINITIALIZED=/home/mei/esp32/workspace/ai_esp32s3/sdkconfig
+
 //Allow unsafe builds. These builds ARE NOT SECURE.
 UNSAFE_BUILD:BOOL=OFF
 
@@ -539,7 +545,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=123
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=122
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

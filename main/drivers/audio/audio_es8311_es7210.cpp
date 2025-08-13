@@ -11,6 +11,8 @@ void AudioEs8311Es7210::init_i2s_channel(gpio_num_t mclk_pin, gpio_num_t bclk_pi
     i2s_chan_config_t chan_cfg = {
         .id = I2S_NUM_0,
         .role = I2S_ROLE_MASTER,  // i2s的主从模式
+        .dma_desc_num = 6,
+        .dma_frame_num = 256,
         .auto_clear_after_cb = true,
         .auto_clear_before_cb = false,
         .intr_priority = 0, // 中断优先级，数值越小优先级越高
@@ -145,6 +147,7 @@ void AudioEs8311Es7210::init_es7210(void *i2c_bus_handle, i2c_port_t i2c_port, u
     audio_input_dev = esp_codec_dev_new(&dev_cfg);
 }
 
+
 AudioEs8311Es7210::AudioEs8311Es7210(void* i2c_bus_handle, i2c_port_t i2c_port, int input_sample_rate, int output_sample_rate,
                       gpio_num_t mclk_pin, gpio_num_t bclk_pin, gpio_num_t ws_pin, gpio_num_t dout_pin, gpio_num_t din_pin,
                       gpio_num_t pa_pin, bool pa_reverted, uint8_t es8311_i2c_addr, uint8_t es7210_i2c_addr, bool input_ref)
@@ -165,7 +168,11 @@ AudioEs8311Es7210::AudioEs8311Es7210(void* i2c_bus_handle, i2c_port_t i2c_port, 
 
     init_es8311(i2c_bus_handle, i2c_port, es8311_i2c_addr, pa_pin, pa_reverted);
     init_es7210(i2c_bus_handle, i2c_port, es7210_i2c_addr);
+
+    i2s_channel_enable(tx_handle);
+    i2s_channel_enable(rx_handle);
 }
+
 
 AudioEs8311Es7210::~AudioEs8311Es7210()
 {
@@ -203,6 +210,12 @@ void AudioEs8311Es7210::enable_input()
 
 }
 
+void AudioEs8311Es7210::set_output_volume(int volume)
+{ 
+    ESP_ERROR_CHECK(esp_codec_dev_set_out_vol(audio_output_dev, volume));
+    output_volume = volume;
+}
+
 void AudioEs8311Es7210::enable_output()
 {
     if (enabled_output) {
@@ -216,6 +229,9 @@ void AudioEs8311Es7210::enable_output()
         .mclk_multiple = 0,
     };
     ESP_ERROR_CHECK(esp_codec_dev_open(audio_output_dev, &codec_dev));
+
+    ESP_ERROR_CHECK(esp_codec_dev_set_out_vol(audio_output_dev, output_volume)); // Set output volume
+
     enabled_output = true;
 }
 
@@ -239,9 +255,9 @@ int AudioEs8311Es7210::read(int16_t* data, int samples)
     return samples * sizeof(int16_t);
 }
 
-void AudioEs8311Es7210::write(const int16_t* data)
+void AudioEs8311Es7210::write(const int16_t* data, int samples)
 { 
     if (enabled_output) {
-        ESP_ERROR_CHECK_WITHOUT_ABORT(esp_codec_dev_write(audio_output_dev, (void*)data, sizeof(data) * sizeof(int16_t)));
+        ESP_ERROR_CHECK_WITHOUT_ABORT(esp_codec_dev_write(audio_output_dev, (void*)data, samples * sizeof(int16_t)));
     }
 }

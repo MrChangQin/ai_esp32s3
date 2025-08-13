@@ -16,17 +16,19 @@ private:
 public:
     AudioHAL();
     ~AudioHAL();
-    virtual void enable_input();
-    virtual void enable_output();
-    virtual void disable_input();
-    virtual void disable_output();
+    virtual void enable_input() = 0;
+    virtual void enable_output() = 0;
+    virtual void disable_input() = 0;
+    virtual void disable_output() = 0;
+    void output_data(std::vector<int16_t>& pcm);
+    bool input_data(std::vector<int16_t>& pcm);
 
-    virtual void write(const int16_t* data);
-    virtual int read(int16_t* data, int samples);
+    virtual void set_output_volume(int volume) = 0;
 
 protected:
     i2s_chan_handle_t tx_handle = NULL;
     i2s_chan_handle_t rx_handle = NULL;
+    int output_volume = 90;
     int output_sample_rate = 0;
     int input_sample_rate = 0;
     const audio_codec_data_if_t* data_if = nullptr;
@@ -41,5 +43,8 @@ protected:
     bool enabled_input = false;
     bool enabled_output = false;
     bool input_ref = false;
+
+    virtual void write(const int16_t* data, int samples) = 0;
+    virtual int read(int16_t* data, int samples) = 0;
 
 };

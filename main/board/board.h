@@ -1,9 +1,12 @@
 #pragma once
 #include <audio_hal.h>
 #include <driver/i2c_types.h>
-#include <soc/gpio_num.h>
 #include <driver/i2c_master.h>
 #include <esp_err.h>
+#include <soc/gpio_num.h>
+#include <web_socket.h>
+
+#include "file_interface.h"
 
 
 void* create_board();
@@ -11,8 +14,12 @@ void* create_board();
 class Board 
 {
 protected:
+    AudioHAL* audio_hal;
+    FileInterface* file_interface;
+
     Board();
     i2c_master_bus_handle_t init_i2c(i2c_port_t i2c_port, gpio_num_t i2c_sda_pin, gpio_num_t i2c_scl_pin);
+
 
 private:
     // 禁用拷贝构造函数
@@ -29,8 +36,11 @@ public:
     }
 
     virtual AudioHAL* GetAudioHAL() = 0;
-
-
+    virtual FileInterface* GetFileInterface() = 0;
+    virtual WebSocket* GetWebSocket() = 0;
+    
+    virtual void start_net() = 0;
+    virtual void stop_net() = 0;
 
 };
 

@@ -1,0 +1,121 @@
+[1/22] Performing build step for 'bootloader'
+[1/1] cd /home/mei/esp32/workspace/ai_esp32s3/build/bootloader/esp-idf/esptool_py && /home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/python /home/mei/esp32/esp-idf/esp-idf-541/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/mei/esp32/workspace/ai_esp32s3/build/bootloader/bootloader.bin
+Bootloader binary size 0x5220 bytes. 0x2de0 bytes (36%) free.
+[2/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/app.cpp.obj
+[3/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/main.cpp:15:9: warning: "TAG" redefined
+   15 | #define TAG "MAIN"
+      |         ^~~
+In file included from /home/mei/esp32/workspace/ai_esp32s3/main/main.cpp:9:
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.h:15:9: note: this is the location of the previous definition
+   15 | #define TAG "SD_CARD"
+      |         ^~~
+[4/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/work_task.cpp.obj
+[5/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/storage/sd_card.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In constructor 'SdCard::SdCard(gpio_num_t, gpio_num_t, gpio_num_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:14:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::disk_status_check_enable' [-Wmissing-field-initializers]
+   14 |     };
+      |     ^
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:14:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::use_one_fat' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'virtual esp_err_t SdCard::read_line(int, char*, size_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:130:10: warning: unused variable 'filepath' [-Wunused-variable]
+  130 |     char filepath[50];
+      |          ^~~~~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:131:10: warning: unused variable 'data1' [-Wunused-variable]
+  131 |     char data1[100];
+      |          ^~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'esp_err_t SdCard::sdCardWriteFile(const char*, const char*, bool)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:196:15: warning: unused variable 'ret' [-Wunused-variable]
+  196 |     esp_err_t ret;
+      |               ^~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:198:10: warning: unused variable 'data1' [-Wunused-variable]
+  198 |     char data1[100]; // Ensure the data buffer is large enough
+      |          ^~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'esp_err_t SdCard::sdCardReadFile(const char*, char*, size_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:227:10: warning: unused variable 'data1' [-Wunused-variable]
+  227 |     char data1[100];
+      |          ^~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'esp_err_t SdCard::sdCardReadLine(const char*, int, char*, size_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:273:10: warning: unused variable 'data1' [-Wunused-variable]
+  273 |     char data1[100];
+      |          ^~~~~
+[6/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/audio_es8311_es7210.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/audio_es8311_es7210.cpp: In member function 'void AudioEs8311Es7210::init_i2s_channel(gpio_num_t, gpio_num_t, gpio_num_t, gpio_num_t, gpio_num_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/audio_es8311_es7210.cpp:19:5: warning: missing initializer for member 'i2s_chan_config_t::allow_pd' [-Wmissing-field-initializers]
+   19 |     };
+      |     ^
+[7/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/audio_hal.cpp.obj
+[8/20] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/ble/ble_lib.c.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/ble/ble_lib.c:29:16: warning: 'raw_scan_rsp_data' defined but not used [-Wunused-variable]
+   29 | static uint8_t raw_scan_rsp_data[] = {
+      |                ^~~~~~~~~~~~~~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/ble/ble_lib.c:22:16: warning: 'raw_adv_data' defined but not used [-Wunused-variable]
+   22 | static uint8_t raw_adv_data[] = {
+      |                ^~~~~~~~~~~~
+[9/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/board/board.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/board/board.cpp: In member function 'i2c_master_bus_t* Board::init_i2c(i2c_port_t, gpio_num_t, gpio_num_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/board/board.cpp:18:5: warning: missing initializer for member 'i2c_master_bus_config_t::<unnamed struct>::allow_pd' [-Wmissing-field-initializers]
+   18 |     };
+      |     ^
+[10/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/wav_recorder.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wav_recorder.cpp:56:27: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
+   56 |             ESP_LOGI(TAG, "Recording: %"PRIu32"/%ds", wav_written/byte_rate + 1, seconds);
+      |                           ^
+[11/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/protocols/protocol_adapter.cpp.obj
+[12/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/board/common/wifi_board.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp: In function 'void ble_recv_cb(const char*, uint16_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::ssid' [-Wmissing-field-initializers]
+  125 |         };
+      |         ^
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::password' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::scan_method' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::bssid_set' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::bssid' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::channel' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::listen_interval' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::sort_method' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_scan_threshold_t::rssi' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_scan_threshold_t::rssi_5g_adjustment' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::rm_enabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::btm_enabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::mbo_enabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::ft_enabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::owe_enabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::transition_disable' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::reserved' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::sae_pwe_h2e' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::sae_pk_mode' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::failure_retry_cnt' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_dcm_set' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_dcm_max_constellation_tx' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_dcm_max_constellation_rx' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_mcs9_enabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_su_beamformee_disabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_trig_su_bmforming_feedback_disabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_trig_mu_bmforming_partial_feedback_disabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_trig_cqi_feedback_disabled' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::he_reserved' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.cpp:125:9: warning: missing initializer for member 'wifi_sta_config_t::sae_h2e_identifier' [-Wmissing-field-initializers]
+[13/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/protocols/websocket_protocol.cpp.obj
+[14/20] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/board/lc_szp_dev/lc_szp_dev_board.cpp.obj
+In file included from /home/mei/esp32/workspace/ai_esp32s3/main/board/lc_szp_dev/lc_szp_dev_board.cpp:3:
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.h:15:9: warning: "TAG" redefined
+   15 | #define TAG "SD_CARD"
+      |         ^~~
+In file included from /home/mei/esp32/workspace/ai_esp32s3/main/board/lc_szp_dev/lc_szp_dev_board.h:2,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/board/lc_szp_dev/lc_szp_dev_board.cpp:1:
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.h:16:9: note: this is the location of the previous definition
+   16 | #define TAG "WifiBoard"
+      |         ^~~
+[15/20] Linking C static library esp-idf/main/libmain.a
+[16/20] Generating ld/sections.ld
+[17/20] Building C object CMakeFiles/ai_esp32s3.elf.dir/project_elf_src_esp32s3.c.obj
+[18/20] Linking CXX executable ai_esp32s3.elf
+[19/20] Generating binary image from built executable
+esptool.py v4.9.0
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated /home/mei/esp32/workspace/ai_esp32s3/build/ai_esp32s3.bin
+[20/20] cd /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/esptool_py && /home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/python /home/mei/esp32/esp-idf/esp-idf-541/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/mei/esp32/workspace/ai_esp32s3/build/partition_table/partition-table.bin /home/mei/esp32/workspace/ai_esp32s3/build/ai_esp32s3.bin
+ai_esp32s3.bin binary size 0x116060 bytes. Smallest app partition is 0x600000 bytes. 0x4e9fa0 bytes (82%) free.

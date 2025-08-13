@@ -5,7 +5,7 @@
  * @brief Construct a new Sd Card:: Sd Card object  
  * 
  */
-SdCard::SdCard(){
+SdCard::SdCard(gpio_num_t cmd_pin, gpio_num_t clk_pin, gpio_num_t d0_pin){
     esp_err_t ret;
     esp_vfs_fat_mount_config_t mount_config = {
         .format_if_mount_failed = true,  // Format if mount fails
@@ -17,9 +17,9 @@ SdCard::SdCard(){
     sdmmc_host_t host = SDMMC_HOST_DEFAULT(); // Default host configuration
     sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT(); // Default slot configuration
     slot_config.width = 1; // 1-bit data width
-    slot_config.cmd = SD_CARD_PIN_CMD; // Command pin
-    slot_config.clk = SD_CARD_PIN_CLK; // Clock pin
-    slot_config.d0 = SD_CARD_PIN_D0; // Data pin
+    slot_config.cmd = cmd_pin; // Command pin
+    slot_config.clk = clk_pin; // Clock pin
+    slot_config.d0 = d0_pin; // Data pin
     slot_config.flags |= SDMMC_SLOT_FLAG_INTERNAL_PULLUP; // Enable internal pull-up resistors
 
     ret = esp_vfs_fat_sdmmc_mount(mount_point, &host, &slot_config, &mount_config, &card);

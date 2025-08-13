@@ -1,6 +1,9 @@
 #include "lc_szp_dev_board.h"
 #include "audio_es8311_es7210.h"
+#include "sd_card.h"
 
+
+REGISTER_BOARD(LcSzpDevBoard);
 
 LcSzpDevBoard::LcSzpDevBoard()
 {
@@ -16,25 +19,28 @@ LcSzpDevBoard::LcSzpDevBoard()
         AUDIO_I2S_DO_IO,
         AUDIO_I2S_DI_IO,
         AUDIO_PA_EN_IO,
-        true,
+        false,
         ES8311_I2C_ADDR,
         ES7210_I2C_ADDR,
         true);
+
+    file_interface = new SdCard(SD_CARD_PIN_CMD, SD_CARD_PIN_CLK, SD_CARD_PIN_D0);
 }
 
 
 LcSzpDevBoard::~LcSzpDevBoard()
 {
 
-
 }
 
-
-
+/* 获取音频HAL */
 AudioHAL* LcSzpDevBoard::GetAudioHAL()
 {
     return audio_hal;
 }
 
-
-REGISTER_BOARD(LcSzpDevBoard);
+/* 获取文件接口 */
+FileInterface* LcSzpDevBoard::GetFileInterface()
+{
+    return file_interface;
+}

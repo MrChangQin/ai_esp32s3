@@ -9,7 +9,10 @@
         "${workspaceFolder}/**",
         "/home/mei/esp32/esp-idf/esp-idf-541/components/**",
         "${workspaceFolder}/main/drivers/audio/**",
-        "${workspaceFolder}/main/drivers/storage/**"
+        "${workspaceFolder}/main/drivers/storage/**",
+        "${workspaceFolder}/main/board/**",
+        "${workspaceFolder}/main/board/common/**"
+
       ],
       "browse": {
         "path": [
