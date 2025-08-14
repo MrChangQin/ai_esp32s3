@@ -5,6 +5,7 @@
 #include <esp_err.h>
 #include <soc/gpio_num.h>
 #include <web_socket.h>
+#include <esp_random.h>
 
 #include "file_interface.h"
 
@@ -20,7 +21,6 @@ protected:
     Board();
     i2c_master_bus_handle_t init_i2c(i2c_port_t i2c_port, gpio_num_t i2c_sda_pin, gpio_num_t i2c_scl_pin);
 
-
 private:
     // 禁用拷贝构造函数
     Board(const Board&) = delete;
@@ -34,6 +34,8 @@ public:
         static Board* instance = static_cast<Board*>(create_board());
         return *instance;
     }
+
+    int getRandom();
 
     virtual AudioHAL* GetAudioHAL() = 0;
     virtual FileInterface* GetFileInterface() = 0;

@@ -28,6 +28,8 @@ file(GLOB BOARD_TYPE_SOURCES
 )
 list(APPEND SRCS ${BOARD_TYPE_SOURCES})
 
+file(GLOB P3_SOUNDS ${CMAKE_CURRENT_SOURCE_DIR}/resources/*.p3)
+
 
 SET(INCLUDE_DIRS 
     "."
@@ -39,9 +41,12 @@ SET(INCLUDE_DIRS
     "board"
     "board/common"
     "protocols"
+    "resources"
 )
 
 idf_component_register(
     SRCS ${SRCS}
     INCLUDE_DIRS ${INCLUDE_DIRS}
+    
+    EMBED_FILES ${P3_SOUNDS}  #添加音频文件
 )

@@ -8,4 +8,20 @@ menu "Board Configuration"
         config BOARD_TYPE_LC_SZP_C3_DEV
             bool "立创实战派c3开发板"
     endchoice
+
+    choice PROTOCOL_TYPE
+    prompt "Protocol Type"
+    default PROTOCOL_TYPE_WEBSOCKET
+    help
+        网络数据传输协议
+    config PROTOCOL_TYPE_WEBSOCKET
+        bool "Websocket"
+    endchoice
+
+    config WEBSOCKET_URL
+    depends on PROTOCOL_TYPE_WEBSOCKET
+    string "Websocket URL"
+    default "ws://192.168.10.25:8000/"
+#TODO: 执行idf.py menuconfig
+    
 endmenu

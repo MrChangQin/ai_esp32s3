@@ -2,6 +2,7 @@
 #include <cstdio>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include <list>
 
 #include <functional>
 #include "type_def.h"
@@ -22,8 +23,7 @@ public:
     WorkTask(uint32_t stack_size);
     ~WorkTask();
 
-    void work_task_loop();
-
     void add_task(FuncVoid task);
-
+    void work_task_loop();
+    void wait_work_task_completion();
 };

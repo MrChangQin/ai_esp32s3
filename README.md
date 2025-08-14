@@ -10,3 +10,8 @@
 
 ## 1.4 播放p3:
 ```python play_p3.py output.p3```
+
+
+![alt text](./md/image.png)
+![alt text](./md/image1.png)
+![alt text](./md/image2.png)

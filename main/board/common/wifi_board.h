@@ -12,6 +12,8 @@
 #include <ble_lib.h>
 #include <tcp_transport.h>
 #include <setting.h>
+#include <app.h>
+#include <p3.h>
 
 
 #define TAG "WifiBoard"
@@ -21,6 +23,7 @@ class WifiBoard: public Board
 private:
     void enter_wifi_config_mode();
     EventGroupHandle_t event_group_ = nullptr;
+    bool is_wifi_config_mode_ = false;
     
 public:
     WifiBoard();

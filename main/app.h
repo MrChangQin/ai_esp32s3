@@ -16,21 +16,33 @@
 #include "protocol_adapter.h"
 #include "setting.h"
 #include "lwip/def.h"
+#include <esp_log.h>
+#include <opus_resample.h>
+
+#ifdef CONFIG_PROTOCOL_TYPE_WEBSOCKET
 #include "websocket_protocol.h"
+#endif
+
 #include "audio_hal.h"
+#include "p3.h"
 
 
 // 单例模式
 class App {
 private:
     WorkTask* work_task = nullptr;
-    std::unique_ptr<OpusEncoderWrapper> opus_encoder_;
 
+    std::unique_ptr<OpusEncoderWrapper> opus_encoder_;
     std::unique_ptr<OpusDecoderWrapper> opus_decoder_;
 
-    std::unique_ptr<ProtocolAdapter> protocol_;
+    OpusResampler input_resampler_;
+    OpusResampler output_resampler_;
 
-    std::list<std::vector<uint8_t>> opus_packets_;  // 每个vector代表一个opus包
+    std::unique_ptr<ProtocolAdapter> protocol_;
+    void set_opus_param(int sample_rate, int frame_duration_ms, int channels);
+
+    std::list<std::vector<uint8_t>> opus_queue_;
+    std::condition_variable opus_queue_cv_;
 
     std::mutex pcm_mutex_;
 
@@ -38,6 +50,8 @@ private:
 
     void audio_task_loop();
     void audio_output_process(AudioHAL* audio_);
+
+    bool get_audio_pcm_resample(std::vector<int16_t> &data, int target_sample_rate, int samples, bool ref=true);
 
     App();
     ~App();
@@ -54,5 +68,9 @@ public:
     void run();
 
     void print_all_tasks();
+
+    void play_p3_audio(const std::string_view& p3_sound_lable);
+
+    void play_number(int number);
 
 };

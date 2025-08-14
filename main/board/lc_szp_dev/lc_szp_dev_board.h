@@ -19,8 +19,8 @@
 #define AUDIO_PA_EN_IO              GPIO_NUM_18
 
 /*** 音频输入输出采样率*/
-#define AUDIO_OUT_SAMPLE_RATE       (16000)
-#define AUDIO_IN_SAMPLE_RATE        (16000)
+#define AUDIO_OUT_SAMPLE_RATE       (24000)
+#define AUDIO_IN_SAMPLE_RATE        (24000)
 
 /* ES8311 ES7210  I2C address 8bit */ 
 // #define ES8311_I2C_ADDR             (0x18)

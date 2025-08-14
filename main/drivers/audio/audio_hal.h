@@ -25,6 +25,10 @@ public:
 
     virtual void set_output_volume(int volume) = 0;
 
+    inline int get_output_sample_rate() const { return output_sample_rate; }
+    inline int get_input_sample_rate() const { return input_sample_rate; }
+    inline bool is_input_ref() const { return input_ref; }
+
 protected:
     i2s_chan_handle_t tx_handle = NULL;
     i2s_chan_handle_t rx_handle = NULL;

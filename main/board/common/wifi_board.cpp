@@ -206,7 +206,12 @@ void WifiBoard::start_net()
             if (bits & BLE_CONFIG_BIT)
             {
                 ESP_LOGI(TAG, "wifi connected");
-                ble_close();
+                if (is_wifi_config_mode_)
+                {
+                    is_wifi_config_mode_ = false;
+                    App::GetInstance().play_p3_audio(P3SoundLable::P3_WIFI_CONFIG_OK);
+                    ble_close();
+                }
                 return;
             }
         }
@@ -214,8 +219,7 @@ void WifiBoard::start_net()
         ESP_LOGI(TAG, "start connect wifi");
         esp_wifi_start();
         auto bits = xEventGroupWaitBits(event_group_, WIFI_CONNECTED_BIT, pdTRUE, pdFALSE, pdMS_TO_TICKS(30000));
-        if (bits & WIFI_CONNECTED_BIT)
-        {
+        if (bits & WIFI_CONNECTED_BIT) {
             ESP_LOGI(TAG, "wifi connected");
             return;
         }
@@ -233,7 +237,20 @@ void WifiBoard::stop_net()
 
 void WifiBoard::enter_wifi_config_mode()
 {
-    ble_init(ble_recv_cb, (uint8_t *)"ESP32S3_AI");
+    static bool is_init = false;
+    static int random = 0;
+
+    if (!is_init)
+    {
+        random = Board::GetInstance()->getRandom();
+        char device_name[32] = {0};
+        sprintf(device_name, "ESP32S3_AI_%d", random);
+        ble_init(ble_recv_cb, (uint8_t *)device_name);
+    }
+    App::GetInstance().play_p3_audio(P3SoundLable::P3_ENTER_BLE_WIFI);
+    App::GetInstance().play_number(random);
+
+    is_wifi_config_mode_ = true;
 }
 
 

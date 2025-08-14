@@ -20,6 +20,11 @@ i2c_master_bus_handle_t Board::init_i2c(i2c_port_t i2c_port, gpio_num_t i2c_sda_
     return i2c_bus;
 }
 
+int Board::getRandom() {
+    uint32_t random_value = esp_random();
+
+    return 100000 + (random_value % 900000);
+}
 
 Board::Board()
 {
