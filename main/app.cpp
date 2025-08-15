@@ -210,7 +210,7 @@ void App::audio_input_process(AudioHAL* audio_) {
     if (wake_word_hal_->is_running()) {
         int samples = wake_word_hal_->get_feed_size(2);
         std::vector<int16_t> pcm_data(samples);
-        get_audio_pcm_resampl(pcm_data, 16000, samples);
+        get_audio_pcm_resample(pcm_data, 16000, samples);
         wake_word_hal_->feed(pcm_data);
     }
 #endif
