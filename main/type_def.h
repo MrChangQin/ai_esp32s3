@@ -1,4 +1,5 @@
 #pragma once
+
 #include <functional>
 #include <list>
 #include <mutex>
@@ -7,7 +8,7 @@
 using FuncVoid = std::function<void()>;
 
 // 任务队列容器（可替换为其他容器如 std::list）
-using ListFunction = std::list<FuncVoid>;
+using ListFunction = std::list<std::function<void()>>;
 
 
 using MutexLockGuard = std::lock_guard<std::mutex>;

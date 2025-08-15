@@ -8,6 +8,7 @@
 #include <esp_random.h>
 
 #include "file_interface.h"
+#include "led.h"
 
 
 void* create_board();
@@ -37,6 +38,7 @@ public:
 
     int getRandom();
 
+    virtual Led* GetLed();
     virtual AudioHAL* GetAudioHAL() = 0;
     virtual FileInterface* GetFileInterface() = 0;
     virtual WebSocket* GetWebSocket() = 0;

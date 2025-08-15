@@ -1,6 +1,7 @@
 #include "lc_szp_dev_board.h"
 #include "audio_es8311_es7210.h"
 #include "sd_card.h"
+#include "one_color_led.h"
 
 
 REGISTER_BOARD(LcSzpDevBoard);
@@ -35,6 +36,12 @@ LcSzpDevBoard::LcSzpDevBoard()
 LcSzpDevBoard::~LcSzpDevBoard()
 {
 
+}
+
+Led* LcSzpDevBoard::GetLed()
+{
+    static OneColorLed led(ONE_COLOR_LED_IO, LEDC_TIMER_0, LEDC_CHANNEL_6, true);
+    return &led;
 }
 
 /* 获取音频HAL */

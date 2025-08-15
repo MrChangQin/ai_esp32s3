@@ -8,7 +8,6 @@
 class ProtocolAdapter
 {
 private:
-    /* data */
 
 protected:
     int sample_rate_ = 16000;
@@ -17,6 +16,7 @@ protected:
     std::string session_id_;
     std::function<void()> server_set_param_callback_;
     std::function<void(std::vector<uint8_t> &&data)> audio_msg_callback_;
+    std::function<void(const cJSON * json_obj)> text_msg_callback_;
 
     virtual bool send_text(const std::string& text) = 0;
 
@@ -31,6 +31,15 @@ public:
 
     virtual bool send_listening_start(bool is_auto);
     virtual bool send_listening_stop();
+
+    virtual bool send_detect_text(std::string text);
+
+    virtual void close_server_channel() = 0;
+    virtual bool is_open_server_channel() = 0;
+
+    inline void get_text_data(std::function<void(const cJSON * json_obj)> callback) {
+        text_msg_callback_ = callback;
+    }
 
     inline int get_server_frame_duration_ms() const {
         return frame_duration_ms_;

@@ -126,6 +126,11 @@ void WebsocketProtocol::parse_text_route(const char *text) {
         cJSON_Delete(root);
         return;
     }
+
+    if (text_msg_callback_) {
+        text_msg_callback_(root);
+        cJSON_Delete(root);
+    }
 }
 
 bool WebsocketProtocol::open_server_channel() {
@@ -133,14 +138,13 @@ bool WebsocketProtocol::open_server_channel() {
     std::string url = CONFIG_WEBSOCKET_URL;
 
     websocket_->OnData([this](const char *data, size_t len, bool binary) {
+        std::vector<uint8_t> buffer(data, data + len);
         if (binary) { 
             if (audio_msg_callback_) {
-                std::vector<uint8_t> buffer(data, data + len);
                 audio_msg_callback_(std::move(buffer));
             }
         } else {
-            ESP_LOGI(TAG, "Received binary message");
-            parse_text_route(data);
+            parse_text_route((const char*)buffer.data());
         }
     });
 

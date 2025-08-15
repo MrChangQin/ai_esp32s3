@@ -38,6 +38,9 @@
 #define SD_CARD_PIN_CMD GPIO_NUM_48
 #define SD_CARD_PIN_D0  GPIO_NUM_21
 
+/* LED */
+#define ONE_COLOR_LED_IO GPIO_NUM_10
+
 
 class LcSzpDevBoard : public WifiBoard
 {
@@ -49,6 +52,7 @@ public:
     LcSzpDevBoard();
     ~LcSzpDevBoard();
 
+    Led* GetLed() override;
     AudioHAL* GetAudioHAL() override;
     FileInterface* GetFileInterface() override;
 

@@ -1,6 +1,8 @@
 #include "app.h"
 
 
+#define TAG "APP"
+
 App::App() { 
     work_task = new WorkTask(4096 * 8);
     opus_encoder_ = std::make_unique<OpusEncoderWrapper>(16000, 1, 60);
@@ -199,7 +201,7 @@ void App::audio_task_loop()
 {
     auto audio_ = Board::GetInstance().GetAudioHAL();
     while (true) {
-        vTaskDelay(pdMS_TO_TICKS(30));
+        // vTaskDelay(pdMS_TO_TICKS(30));
         App::audio_input_process(audio_);
         App::audio_output_process(audio_);
     }
@@ -212,27 +214,86 @@ void App::audio_input_process(AudioHAL* audio_) {
         std::vector<int16_t> pcm_data(samples);
         get_audio_pcm_resample(pcm_data, 16000, samples);
         wake_word_hal_->feed(pcm_data);
+        return;
     }
 #endif
+    if (input_audio_process_->is_running()) {
+        int samples = input_audio_process_->get_feed_size(2);
+        std::vector<int16_t> pcm_data(samples);
+        get_audio_pcm_resamp(pcm_data, 16000, samples);
+        input_audio_process_->feed(pcm_data);
+        return;
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(30));
+}
+
+void App::add_task(FuncVoid task) {
+    MutexLockGuard lock(task_mutex);
+    task_count++;
+    task_list.emplace_back([call = std::move(task), this]() {
+        call();
+        {
+            MutexLockGuard lock(task_mutex);
+            task_count--;
+            if (task_count == 0 && task_list.empty())
+            {
+                task_condition_variable_.notify_all();
+            }
+        }
+    });
+    task_condition_variable_.notify_all();
 }
 
 void App::run() { 
 
     auto audio_ = Board::GetInstance().GetAudioHAL();
-
 #ifdef CONFIG_WAKE_WORD_DETECT_TYPE
-wake_word_hal_ = std::make_unique<WakeWordDetect>(audio_);
+    wake_word_hal_ = std::make_unique<WakeWordDetect>(audio_);
 #endif
 #ifdef CONFIG_CMD_WORD_DETECT_TYPE
-wake_word_hal_ = std::make_unique<WakeWordHal>(audio_);
+    wake_word_hal_ = std::make_unique<WakeWordHal>(audio_);
 #endif
+
 #ifdef CONFIG_WAKE_WORD_DETECT_TYPE || CONFIG_CMD_WORD_DETECT_TYPE
     wake_word_hal_->set_wake_word_detected_ok_callback([this](const std::string& wake_word) {
+        if (protocol_->is_open_server_channel()) {
+            return;
+        }
         std::printf("唤醒词：%s\n", wake_word.c_str());
-        wake_word_hal_->stop();
+
+        this->add_task([this, wake_word]() {
+            if (!protocol_->open_server_channel()) {
+                ESP_LOGW(TAG, "open server channel failed");
+                return;
+            }
+            protocol_->send_detect_text(wake_word);
+            wake_word_hal_->stop();
+        });
     });
     wake_word_hal_->start();
 #endif
+
+    input_audio_process_ = std::make_unique<InputAudioProcess>(audio_);
+
+    input_audio_process_->set_vad_callback([this]() {
+        this->add_task([this]() {
+            ESP_LOGI(TAG, "input audio over");
+            protocol_->send_listening_stop();
+            input_audio_process_->stop();
+            wake_word_hal_->start();
+        });
+    });
+
+    input_audio_process_->set_data_output_callback([this](std::vector<int16_t>&& pcm) {
+        work_task_->add_task([this, pcm = std::move(pcm)]() mutable {
+            opus_encoder_->Encode(std::move(pcm), [this](std::vector<uint8_t>&& opus) {
+                this->add_task([this, opus = std::move(opus)]() {
+                    protocol_->send_audio(std::move(opus));
+                });
+            });
+        });
+    });
 
     xTaskCreatePinnedToCore([](void* arg) {
         App* app = (App*)arg;
@@ -241,6 +302,16 @@ wake_word_hal_ = std::make_unique<WakeWordHal>(audio_);
     }, "audio", 4096 * 2, this, 8, &audio_task_handle_, 0);
 
     auto& board = Board::GetInstance();
+
+    // LED Test
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     board.GetLed()->set_brightness(i*10);
+    //     vTaskDelay(pdMS_TO_TICKS(500));
+    // }
+
+    // LED Test
+    // board.GetLed()->start_fade(100, 5, 500, true);
 
     board.start_net();
 
@@ -257,8 +328,28 @@ wake_word_hal_ = std::make_unique<WakeWordHal>(audio_);
         opus_queue_.emplace_back(std::move(data));
     });
 
-    protocol_->open_server_channel();
+    protocol_->get_text_data([this](const cJSON* json_obj) {
+        char *json_str = cJSON_PrintUnformatted(json_obj);
+        if (json_str != NULL) {
+            ESP_LOGI(TAG, "接收到消息：%s", json_str);
+            cJSON_free(json_str);
+        }
 
+        auto type = cJSON_GetObjectItem(json_obj, "type");
+        if (strcmp(type->valuestring, "tts") == 0) {
+            auto state = cJSON_GetObjectItem(json_obj, "state");
+            if (strcmp(state->valuestring, "stop") == 0) {
+                wake_word_hal_->stop();
+                ESP_LOGI(TAG, "停止播放TTS");
+
+                add_task([this]() {
+                    work_task_->wait_work_task_completion();
+                    protocol_->send_listening_start(true);
+                    input_audio_process_->start();
+                });
+            }
+        }
+    });
 
 #if 0
     int is_enter_wifi_config;
@@ -267,9 +358,19 @@ wake_word_hal_ = std::make_unique<WakeWordHal>(audio_);
     is_enter_wifi_config = setting.get_int(SettingKey::IS_ENTER_WIFI_CONFIG, -1);
 #endif
 
-
     while (true) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
+
+        vTaskDelay(pdMS_TO_TICKS(30));
+        MutexUniqueLock lock(task_mutex);
+        task_condition_variable_.wait(lock, [this]() { return !task_list.empty(); });
+
+        ListFunction func_list = std::move(task_list);
+        lock.unlock();
+
+        for (auto& func : func_list)
+        {
+            func();
+        }
         // print_all_tasks();
     }
 }

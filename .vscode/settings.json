@@ -147,5 +147,6 @@
     "--background-index",
     "--query-driver=/home/mei/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc",
     "--compile-commands-dir=/home/mei/esp32/workspace/ai_esp32s3/build"
-  ]
+  ],
+  "CodeGPT.apiKey": "Anthropic"
 }

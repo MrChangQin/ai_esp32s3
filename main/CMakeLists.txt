@@ -12,10 +12,12 @@ SET(SRCS "main.cpp"
     "drivers/audio/wake_word/wake_word_detect.cpp"
     "drivers/audio/wake_word/wake_word_hal.cpp"
     "drivers/audio/wake_word/cmd_word_detect.cpp"
+    "drivers/led/one_color_led.cpp"
     "board/board.cpp"
     "board/common/wifi_board.cpp"
     "protocols/protocol_adapter.cpp"
     "protocols/websocket_protocol.cpp"
+
 )
 
 # 新增开发板需要在这里写一个配置BOARD_TYPE的宏为板子类型文件夹名称
@@ -43,6 +45,7 @@ SET(INCLUDE_DIRS
     "drivers/ble"
     "drivers/setting"
     "drivers/audio/wake_word"
+    "drivers/led"
     "board"
     "board/common"
     "protocols"

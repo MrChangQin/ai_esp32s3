@@ -1,6 +1,8 @@
 #include "sd_card.h"
 
 
+#define TAG "SD_CARD"
+
 /**
  * @brief Construct a new Sd Card:: Sd Card object  
  * 

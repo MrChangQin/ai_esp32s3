@@ -34,6 +34,7 @@
 #include "audio_hal.h"
 #include "p3.h"
 #include "wake_word_hal.h"
+#include "input_audio_process.h"
 
 
 // 单例模式
@@ -67,6 +68,12 @@ private:
 
     std::unique_ptr<WakeWordHal> wake_word_hal_ = nullptr;
 
+    std::mutex task_mutex;
+    std::condition_variable task_condition_variable_;
+    ListFunction task_list;
+    uint32_t task_count;
+
+    std::unique_ptr<InputAudioProcess> input_audio_process_ = nullptr;
 
     App();
     ~App();
@@ -87,5 +94,7 @@ public:
     void play_p3_audio(const std::string_view& p3_sound_lable);
 
     void play_number(int number);
+
+    void add_task(FuncVoid task);
 
 };

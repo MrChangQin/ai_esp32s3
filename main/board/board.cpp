@@ -26,6 +26,11 @@ int Board::getRandom() {
     return 100000 + (random_value % 900000);
 }
 
+Led* Board::GetLed() {
+    static NotLed led;
+    return &led;
+}
+
 Board::Board()
 {
     

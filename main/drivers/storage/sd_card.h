@@ -11,9 +11,6 @@
 #include "file_interface.h"
 
 
-
-#define TAG "SD_CARD"
-
 #define SD_CARD_MOUNT_POINT "/sdcard"
 #define SD_CARD_MAX_FILES 5
 

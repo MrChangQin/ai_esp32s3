@@ -26,4 +26,7 @@ public:
     bool send_text(const std::string& text) override;
     void send_audio(const std::vector<uint8_t>& data) override;
 
+    void close_server_channel() override;
+    bool is_open_server_channel() override;
+
 };
