@@ -9,6 +9,7 @@ menu "Board Configuration"
             bool "立创实战派c3开发板"
     endchoice
 
+    
     choice PROTOCOL_TYPE
     prompt "Protocol Type"
     default PROTOCOL_TYPE_WEBSOCKET
@@ -22,6 +23,17 @@ menu "Board Configuration"
     depends on PROTOCOL_TYPE_WEBSOCKET
     string "Websocket URL"
     default "ws://192.168.10.25:8000/"
-#TODO: 执行idf.py menuconfig
+
+
+    choice WAKE_WORD_TYPE
+    prompt "Wake Type"
+    default WAKE_WORD_DETECT_TYPE
+    help
+        唤醒类型
+    config WAKE_WORD_DETECT_TYPE
+        bool "唤醒词检测"
+    config CMD_WORD_DETECT_TYPE
+        bool "命令词检测"
+    endchoice
     
 endmenu

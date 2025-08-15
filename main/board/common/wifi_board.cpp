@@ -242,7 +242,7 @@ void WifiBoard::enter_wifi_config_mode()
 
     if (!is_init)
     {
-        random = Board::GetInstance()->getRandom();
+        random = Board::GetInstance().getRandom();
         char device_name[32] = {0};
         sprintf(device_name, "ESP32S3_AI_%d", random);
         ble_init(ble_recv_cb, (uint8_t *)device_name);

@@ -1,6 +1,9 @@
 #include "websocket_protocol.h"
 #include "protocol_adapter.h"
 #include "cJSON.h"
+#include "app_config.h"
+#include <cstring>
+#include <esp_log.h>
 
 
 #define TAG "WebsocketProtocol"
@@ -16,7 +19,7 @@ WebsocketProtocol::~WebsocketProtocol() {
     vEventGroupDelete(event_group_);
 }
 
-void WebsocketProtocol::send_audio(const std::vector<int8_t> &data) {
+void WebsocketProtocol::send_audio(const std::vector<uint8_t> &data) {
     if (websocket_ == nullptr) {
         return;
     }
@@ -32,7 +35,7 @@ bool WebsocketProtocol::send_hello_text() {
 
     cJSON_AddStringToObject(root, "type", "hello");
     cJSON_AddNumberToObject(root, "version", VERSION);
-    cJSON_AddNumberToObject(root, "transport", "websocket");
+    cJSON_AddStringToObject(root, "transport", "websocket");
 
     cJSON *audio_obj = cJSON_CreateObject();
     if (audio_obj == NULL) {
@@ -40,7 +43,7 @@ bool WebsocketProtocol::send_hello_text() {
         return false;
     }
 
-    cJSON_AddNumberToObject(audio_obj, "format", "opus");
+    cJSON_AddStringToObject(audio_obj, "format", "opus");
     cJSON_AddNumberToObject(audio_obj, "sample_rate", OPUS_SAMPLE_RATE);
     cJSON_AddNumberToObject(audio_obj, "channels", 1);
     cJSON_AddNumberToObject(audio_obj, "frame_duration", OPUS_FRAME_DURATION);
@@ -59,7 +62,7 @@ bool WebsocketProtocol::send_hello_text() {
     return success;
 }
 
-bool ProtocolAdapter::send_text(const std::string &text) {
+bool WebsocketProtocol::send_text(const std::string &text) {
     if (websocket_ == nullptr) {
         return false;
     }
@@ -132,7 +135,7 @@ bool WebsocketProtocol::open_server_channel() {
     websocket_->OnData([this](const char *data, size_t len, bool binary) {
         if (binary) { 
             if (audio_msg_callback_) {
-                std::vector<int8_t> buffer(data, data + len);
+                std::vector<uint8_t> buffer(data, data + len);
                 audio_msg_callback_(std::move(buffer));
             }
         } else {
@@ -162,7 +165,7 @@ bool WebsocketProtocol::open_server_channel() {
         return true;
     }
 
-    ESP_LOGI(TAG, "server hello timeout")
+    ESP_LOGI(TAG, "server hello timeout");
     return false;
 }
 

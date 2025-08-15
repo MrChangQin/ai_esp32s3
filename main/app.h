@@ -17,14 +17,23 @@
 #include "setting.h"
 #include "lwip/def.h"
 #include <esp_log.h>
-#include <opus_resample.h>
+#include <opus_resampler.h>
 
 #ifdef CONFIG_PROTOCOL_TYPE_WEBSOCKET
 #include "websocket_protocol.h"
 #endif
 
+#ifdef CONFIG_WAKE_WORD_DETECT_TYPE
+#include "wake_word_detect.h"
+#endif
+
+#ifdef CONFIG_CMD_WORD_DETECT_TYPE
+#include "cmd_word_detect.h"
+#endif
+
 #include "audio_hal.h"
 #include "p3.h"
+#include "wake_word_hal.h"
 
 
 // 单例模式
@@ -37,6 +46,7 @@ private:
 
     OpusResampler input_resampler_;
     OpusResampler output_resampler_;
+    OpusResampler ref_resampler_;
 
     std::unique_ptr<ProtocolAdapter> protocol_;
     void set_opus_param(int sample_rate, int frame_duration_ms, int channels);
@@ -49,9 +59,14 @@ private:
     TaskHandle_t audio_task_handle_ = nullptr;
 
     void audio_task_loop();
+
+    void audio_input_process(AudioHAL* audio_);
     void audio_output_process(AudioHAL* audio_);
 
-    bool get_audio_pcm_resample(std::vector<int16_t> &data, int target_sample_rate, int samples, bool ref=true);
+    bool get_audio_pcm_resample(std::vector<int16_t> &pcm_data, int target_sample_rate, int samples, bool ref=true);
+
+    std::unique_ptr<WakeWordHal> wake_word_hal_ = nullptr;
+
 
     App();
     ~App();

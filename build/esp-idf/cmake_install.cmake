@@ -569,6 +569,21 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__esp-dsp/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__dl_fft/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__esp-sr/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/espressif__esp_codec_dev/cmake_install.cmake")
 endif()
 

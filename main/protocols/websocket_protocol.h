@@ -14,7 +14,7 @@ class WebsocketProtocol: public ProtocolAdapter
 private:
     EventGroupHandle_t event_group_ = nullptr;
     bool send_hello_text();
-    WebSocket* wesocket_ = nullptr;
+    WebSocket* websocket_ = nullptr;
     void parse_text_route(const char* text);
     bool parse_hello_text(const char* type, const cJSON* root);
 
@@ -24,6 +24,6 @@ public:
     ~WebsocketProtocol();
     bool open_server_channel() override;
     bool send_text(const std::string& text) override;
-    void send_audio(const std::vector<int8_t>& data) override;
+    void send_audio(const std::vector<uint8_t>& data) override;
 
 };

@@ -33,6 +33,44 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 2.3.3
+  espressif/dl_fft:
+    component_hash: df7371eeb8f6b5af5ecc1a051f93ba45527030dc77200e4b531f26cc7260805a
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 0.3.0
+  espressif/esp-dsp:
+    component_hash: 619639efc18cfa361a9e423739b9b0ffc14991effc6c027f955c2f2c3bf1754b
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.2'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.6.0
+  espressif/esp-sr:
+    component_hash: 12733d9b4aef5d5e295f35c4671835d605992d00583fcd2f8d21166f62c6b071
+    dependencies:
+    - name: espressif/dl_fft
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=0.2.0'
+    - name: espressif/esp-dsp
+      registry_url: https://components.espressif.com
+      require: private
+      version: 1.6.0
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 2.1.5
   espressif/esp_codec_dev:
     component_hash: c71e2d13dad6fc41561590dd88dbc45c79e3f4ef48d5ee3575c60e8b6c8e79d5
     dependencies:
@@ -50,8 +88,9 @@ dependencies:
 direct_dependencies:
 - 78/esp-ml307
 - 78/esp-opus-encoder
+- espressif/esp-sr
 - espressif/esp_codec_dev
 - idf
-manifest_hash: cef1f2ca8145ae1a0aaec910ca2f1d470489ba530c5f718561869ec16cd7066b
+manifest_hash: b8d33b8df78bc740bb44786e68cf9e46f5c89f286a5e5ed4b41c2582cd3889a2
 target: esp32s3
 version: 2.0.0

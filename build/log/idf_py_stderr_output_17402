@@ -1,0 +1,10 @@
+CMake Error at /home/mei/esp32/esp-idf/esp-idf-541/tools/cmake/component.cmake:317 (message):
+  Include directory
+  '/home/mei/esp32/workspace/ai_esp32s3/main/drivers/wake_word' is not a
+  directory.
+Call Stack (most recent call first):
+  /home/mei/esp32/esp-idf/esp-idf-541/tools/cmake/component.cmake:492 (__component_add_include_dirs)
+  main/CMakeLists.txt:50 (idf_component_register)
+
+
+ninja: error: rebuilding 'build.ninja': subcommand failed

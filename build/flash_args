@@ -3,3 +3,4 @@
 0x100000 ai_esp32s3.bin
 0x8000 partition_table/partition-table.bin
 0xd000 ota_data_initial.bin
+0x10000 srmodels/srmodels.bin

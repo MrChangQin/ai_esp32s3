@@ -1,0 +1,111 @@
+[1/32] Performing build step for 'bootloader'
+[1/1] cd /home/mei/esp32/workspace/ai_esp32s3/build/bootloader/esp-idf/esptool_py && /home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/python /home/mei/esp32/esp-idf/esp-idf-541/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/mei/esp32/workspace/ai_esp32s3/build/bootloader/bootloader.bin
+Bootloader binary size 0x5220 bytes. 0x2de0 bytes (36%) free.
+[2/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/storage/sd_card.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In constructor 'SdCard::SdCard(gpio_num_t, gpio_num_t, gpio_num_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:14:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::disk_status_check_enable' [-Wmissing-field-initializers]
+   14 |     };
+      |     ^
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:14:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::use_one_fat' [-Wmissing-field-initializers]
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'virtual esp_err_t SdCard::read_line(int, char*, size_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:130:10: warning: unused variable 'filepath' [-Wunused-variable]
+  130 |     char filepath[50];
+      |          ^~~~~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:131:10: warning: unused variable 'data1' [-Wunused-variable]
+  131 |     char data1[100];
+      |          ^~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'esp_err_t SdCard::sdCardWriteFile(const char*, const char*, bool)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:196:15: warning: unused variable 'ret' [-Wunused-variable]
+  196 |     esp_err_t ret;
+      |               ^~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:198:10: warning: unused variable 'data1' [-Wunused-variable]
+  198 |     char data1[100]; // Ensure the data buffer is large enough
+      |          ^~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'esp_err_t SdCard::sdCardReadFile(const char*, char*, size_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:227:10: warning: unused variable 'data1' [-Wunused-variable]
+  227 |     char data1[100];
+      |          ^~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp: In member function 'esp_err_t SdCard::sdCardReadLine(const char*, int, char*, size_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.cpp:273:10: warning: unused variable 'data1' [-Wunused-variable]
+  273 |     char data1[100];
+      |          ^~~~~
+[3/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/wake_word/wake_word_detect.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.cpp: In lambda function:
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.cpp:51:20: warning: passing NULL to non-pointer argument 1 of 'void vTaskDelay(TickType_t)' [-Wconversion-null]
+   51 |         vTaskDelay(NULL);
+      |                    ^~~~
+In file included from /home/mei/esp32/esp-idf/esp-idf-541/components/freertos/esp_additions/include/freertos/idf_additions.h:20,
+                 from /home/mei/esp32/esp-idf/esp-idf-541/components/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h:1533,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/dl_lib_matrix.h:18,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/dl_lib_matrixq.h:18,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/dl_lib_convq_queue.h:17,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/esp_vadn_iface.h:4,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/esp_vadn_models.h:2,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/esp_afe_config.h:6,
+                 from /home/mei/esp32/workspace/ai_esp32s3/managed_components/espressif__esp-sr/include/esp32s3/esp_afe_sr_iface.h:2,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_hal.h:5,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.h:2,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.cpp:1:
+/home/mei/esp32/esp-idf/esp-idf-541/components/freertos/FreeRTOS-Kernel/include/freertos/task.h:834:35: note:   declared here
+  834 | void vTaskDelay( const TickType_t xTicksToDelay ) PRIVILEGED_FUNCTION;
+      |                  ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.cpp: In member function 'void WakeWordDetect::wake_word_detect_task()':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.cpp:56:10: warning: unused variable 'fetch_size' [-Wunused-variable]
+   56 |     auto fetch_size = afe_iface_handle_->get_fetch_chunksize(afe_sr_data_);
+      |          ^~~~~~~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/wake_word/wake_word_detect.cpp:57:10: warning: unused variable 'feed_size' [-Wunused-variable]
+   57 |     auto feed_size = afe_iface_handle_->get_feed_chunksize(afe_sr_data_);
+      |          ^~~~~~~~~
+[4/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/protocols/websocket_protocol.cpp.obj
+[5/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/wav_recorder.cpp.obj
+[6/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/audio_hal.cpp.obj
+[7/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/audio/audio_es8311_es7210.cpp.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/audio_es8311_es7210.cpp: In member function 'void AudioEs8311Es7210::init_i2s_channel(gpio_num_t, gpio_num_t, gpio_num_t, gpio_num_t, gpio_num_t)':
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/audio/audio_es8311_es7210.cpp:19:5: warning: missing initializer for member 'i2s_chan_config_t::allow_pd' [-Wmissing-field-initializers]
+   19 |     };
+      |     ^
+[8/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/setting/setting.cpp.obj
+[9/30] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/board/lc_szp_dev/lc_szp_dev_board.cpp.obj
+In file included from /home/mei/esp32/workspace/ai_esp32s3/main/board/lc_szp_dev/lc_szp_dev_board.h:2,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/board/lc_szp_dev/lc_szp_dev_board.cpp:1:
+/home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.h:19:9: warning: "TAG" redefined
+   19 | #define TAG "WifiBoard"
+      |         ^~~
+In file included from /home/mei/esp32/workspace/ai_esp32s3/main/app.h:11,
+                 from /home/mei/esp32/workspace/ai_esp32s3/main/board/common/wifi_board.h:15:
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/storage/sd_card.h:15:9: note: this is the location of the previous definition
+   15 | #define TAG "SD_CARD"
+      |         ^~~
+[10/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/0.p3.S.obj
+[11/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/1.p3.S.obj
+[12/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/2.p3.S.obj
+[13/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/3.p3.S.obj
+[14/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/4.p3.S.obj
+[15/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/5.p3.S.obj
+[16/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/7.p3.S.obj
+[17/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/6.p3.S.obj
+[18/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/9.p3.S.obj
+[19/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/8.p3.S.obj
+[20/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/enter_ble_wifi.p3.S.obj
+[21/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/key_wake_up.p3.S.obj
+[22/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/success.p3.S.obj
+[23/30] Building ASM object esp-idf/main/CMakeFiles/__idf_main.dir/__/__/wifi_config_ok.p3.S.obj
+[24/30] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/drivers/ble/ble_lib.c.obj
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/ble/ble_lib.c:29:16: warning: 'raw_scan_rsp_data' defined but not used [-Wunused-variable]
+   29 | static uint8_t raw_scan_rsp_data[] = {
+      |                ^~~~~~~~~~~~~~~~~
+/home/mei/esp32/workspace/ai_esp32s3/main/drivers/ble/ble_lib.c:22:16: warning: 'raw_adv_data' defined but not used [-Wunused-variable]
+   22 | static uint8_t raw_adv_data[] = {
+      |                ^~~~~~~~~~~~
+[25/30] Linking C static library esp-idf/main/libmain.a
+[26/30] Generating ld/sections.ld
+[27/30] Building C object CMakeFiles/ai_esp32s3.elf.dir/project_elf_src_esp32s3.c.obj
+[28/30] Linking CXX executable ai_esp32s3.elf
+[29/30] Generating binary image from built executable
+esptool.py v4.9.0
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated /home/mei/esp32/workspace/ai_esp32s3/build/ai_esp32s3.bin
+[30/30] cd /home/mei/esp32/workspace/ai_esp32s3/build/esp-idf/esptool_py && /home/mei/.espressif/python_env/idf5.4_py3.10_env/bin/python /home/mei/esp32/esp-idf/esp-idf-541/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/mei/esp32/workspace/ai_esp32s3/build/partition_table/partition-table.bin /home/mei/esp32/workspace/ai_esp32s3/build/ai_esp32s3.bin
+ai_esp32s3.bin binary size 0x118170 bytes. Smallest app partition is 0x600000 bytes. 0x4e7e90 bytes (82%) free.

@@ -24,7 +24,11 @@ LcSzpDevBoard::LcSzpDevBoard()
         ES7210_I2C_ADDR,
         true);
 
+    audio_hal->enable_input();
+    audio_hal->enable_output();
+
     file_interface = new SdCard(SD_CARD_PIN_CMD, SD_CARD_PIN_CLK, SD_CARD_PIN_D0);
+
 }
 
 
